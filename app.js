@@ -15,7 +15,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/wikiDB");
 const articleSchema = mongoose.Schema({
 	title: String,
 	content: String
-})
+}, {timestamp: true});
 
 const Article = mongoose.model("Article", articleSchema);
 
@@ -76,7 +76,7 @@ app.route("/article/:anyArticle")
 	})
 
 	.put(function (req, res) {
-		Article.updateOne({ title: req.params.anyArticle },
+		Article.findOneAndUpdate({ title: req.params.anyArticle },
 			{ title: req.body.title, content: req.body.content },
 			{ overwrite: true },
 			function (err) {
