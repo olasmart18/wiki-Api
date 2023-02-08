@@ -6,7 +6,8 @@ const ejs = require("ejs");
 mongoose.set("strictQuery", true);
 
 const app = express();
-app.use(bodyParser.urlencoded({ extended: true }))
+// app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json());
 app.set("view engine", "ejs")
 app.use(express.static("public"));
 
@@ -15,7 +16,7 @@ mongoose.connect("mongodb://127.0.0.1:27017/wikiDB");
 const articleSchema = mongoose.Schema({
 	title: String,
 	content: String
-}, {timestamp: true});
+}, { timestamps: true });
 
 const Article = mongoose.model("Article", articleSchema);
 
@@ -96,7 +97,7 @@ app.route("/article/:anyArticle")
 					res.send("updated article")
 				} else {
 					res.send(err)
-				}
+				} 
 			})
 	})
 
